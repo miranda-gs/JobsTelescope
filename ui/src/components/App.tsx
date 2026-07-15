@@ -24,6 +24,7 @@ export function App({ jarPath = 'core/target/JobsTelescope-0.0.1-SNAPSHOT.jar' }
     if (status === 'running') setScreen('running');
     else if (status === 'completed') setScreen('completed');
     else if (status === 'error') setScreen('error');
+    else if (status === 'idle') setScreen('search');
   }, [status]);
 
   const handleSearch = useCallback(
@@ -38,6 +39,18 @@ export function App({ jarPath = 'core/target/JobsTelescope-0.0.1-SNAPSHOT.jar' }
       setScreen('search');
     }
   });
+
+  if (screen === 'search' && status === 'connecting') {
+    return (
+      <>
+        <Text bold color="yellow">
+          Jobs Telescope
+        </Text>
+        <Text> </Text>
+        <Text dimColor>Connecting to Core...</Text>
+      </>
+    );
+  }
 
   if (screen === 'running') {
     return (
