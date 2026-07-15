@@ -19,5 +19,7 @@ public class Job {
     Region region;
     String source;
     @Builder.Default
+    String description = "";
+    @Builder.Default
     LocalDate foundAt = LocalDate.now();
 }
