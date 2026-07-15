@@ -39,6 +39,7 @@ public class JobNormalizer {
                 .platform(job.getPlatform())
                 .region(job.getRegion())
                 .source(job.getSource())
+                .description(job.getDescription())
                 .foundAt(job.getFoundAt())
                 .build();
     }
