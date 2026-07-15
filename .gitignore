@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# OpenCode
+AGENTS.md
+
+# Build artifacts and dependencies
+node_modules/
+output/
+jtelescope
+ui/node_modules/
