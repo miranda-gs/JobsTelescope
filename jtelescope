@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+set -e
+
+PROJECT_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
+JAR_FILE="${1:-$PROJECT_DIR/target/JobsTelescope-0.0.1-SNAPSHOT.jar}"
+
+check_prerequisites() {
+    local missing=()
+
+    if ! command -v node &>/dev/null; then
+        missing+=("Node.js")
+    fi
+
+    if ! command -v java &>/dev/null; then
+        missing+=("Java")
+    fi
+
+    if [ ${#missing[@]} -gt 0 ]; then
+        echo "ERROR: Missing required tools: ${missing[*]}" >&2
+        echo "Install them and try again." >&2
+        exit 1
+    fi
+}
+
+check_prerequisites
+
+if [ ! -f "$JAR_FILE" ]; then
+    echo "Core JAR not found. Building with Maven..."
+    if [ -f "$PROJECT_DIR/mvnw" ]; then
+        (cd "$PROJECT_DIR" && ./mvnw clean package -DskipTests -q) || {
+            echo "ERROR: Maven build failed. Check the logs above." >&2
+            exit 1
+        }
+    else
+        mvn clean package -DskipTests -q || {
+            echo "ERROR: Maven build failed. Check the logs above." >&2
+            exit 1
+        }
+    fi
+    JAR_FILE="$PROJECT_DIR/target/JobsTelescope-0.0.1-SNAPSHOT.jar"
+fi
+
+JAR_FILE="$(realpath "$JAR_FILE")"
+
+if [ ! -f "$JAR_FILE" ]; then
+    echo "ERROR: JAR file not found at $JAR_FILE" >&2
+    exit 1
+fi
+
+UI_DIR="$PROJECT_DIR/ui"
+
+if [ ! -d "$UI_DIR/node_modules" ]; then
+    echo "UI dependencies not installed. Running npm install..."
+    (cd "$UI_DIR" && npm install) || {
+        echo "ERROR: npm install failed in $UI_DIR" >&2
+        exit 1
+    }
+fi
+
+export NODE_ENV=production
+
+exec npx --prefix "$UI_DIR" tsx "$UI_DIR/src/index.tsx" "$JAR_FILE"
