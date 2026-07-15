@@ -1,6 +1,7 @@
 package com.miranda_gs.JobsTelescope.infrastructure.io;
 
 import com.miranda_gs.JobsTelescope.application.usecase.SearchJobs;
+import com.miranda_gs.JobsTelescope.domain.entity.SearchRequest;
 import com.miranda_gs.JobsTelescope.domain.error.InvalidSearchRequestException;
 import com.miranda_gs.JobsTelescope.infrastructure.logger.InfrastructureLogger;
 
@@ -24,7 +25,14 @@ public class CommandProcessor {
     }
 
     public boolean processNext() throws Exception {
-        var request = reader.readCommand();
+        SearchRequest request;
+        try {
+            request = reader.readCommand();
+        } catch (IllegalArgumentException e) {
+            writer.writeError("Invalid command: " + e.getMessage());
+            return true;
+        }
+
         if (request == null) return false;
 
         log.info("Processing command: query={}, region={}", request.getQuery(), request.getRegion());
