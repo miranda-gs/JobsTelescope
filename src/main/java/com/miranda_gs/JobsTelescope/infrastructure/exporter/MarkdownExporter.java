@@ -43,16 +43,19 @@ public class MarkdownExporter implements Exporter {
     }
 
     private String buildMarkdownContent(Job job) {
-        return new StringBuilder()
+        var sb = new StringBuilder()
                 .append("# ").append(job.getTitle().getValue()).append("\n\n")
                 .append("**Empresa:** ").append(job.getCompany()).append("\n\n")
                 .append("**Localização:** ").append(job.getLocation().getValue()).append("\n\n")
-                .append("**Plataforma:** ").append(job.getPlatform().name()).append("\n\n")
-                .append("**Região:** ").append(job.getRegion().name()).append("\n\n")
-                .append("**Fonte:** ").append(job.getSource()).append("\n\n")
                 .append("**Link:** [Ver vaga](").append(job.getUrl().getValue()).append(")\n\n")
-                .append("**Data de coleta:** ").append(job.getFoundAt().format(DATE_FMT)).append("\n")
-                .toString();
+                .append("**Data de coleta:** ").append(job.getFoundAt().format(DATE_FMT)).append("\n\n");
+
+        if (!job.getDescription().isBlank()) {
+            sb.append("---\n\n")
+              .append(job.getDescription()).append("\n");
+        }
+
+        return sb.toString();
     }
 
     private String sanitizeFilename(String title, String company, int index) {
