@@ -43,8 +43,25 @@ public class SearchJobs {
 
     private int estimateProgress(String step) {
         return switch (step) {
-            case "GupyScraper" -> 30;
-            case "RemoteOkScraper" -> 60;
+            case "GupyScraper" -> 3;
+            case "VagasScraper" -> 6;
+            case "CathoScraper" -> 9;
+            case "InfojobsScraper" -> 12;
+            case "NinetyNineJobsScraper" -> 15;
+            case "ProgramathorScraper" -> 18;
+            case "TramposScraper" -> 21;
+            case "IndeedScraper" -> 24;
+            case "GlassdoorScraper" -> 27;
+            case "NerdinScraper" -> 30;
+            case "PicpayScraper" -> 33;
+            case "IfoodScraper" -> 36;
+            case "MercadoLivreScraper" -> 39;
+            case "RemoteOkScraper" -> 42;
+            case "WellfoundScraper" -> 45;
+            case "OttaScraper" -> 48;
+            case "WeWorkRemotelyScraper" -> 51;
+            case "JobicyScraper" -> 54;
+            case "RemotiveScraper" -> 57;
             case "normalizing" -> 80;
             case "deduplicating" -> 95;
             default -> 10;

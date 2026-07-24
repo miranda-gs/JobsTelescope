@@ -22,6 +22,11 @@ const platformSchema = z.enum([
   'OTTA',
   'REMOTE_OK',
   'JOBICY',
+  'NERDIN',
+  'PICPAY',
+  'IFOOD',
+  'MERCADO_LIVRE',
+  'REMOTIVE',
 ]);
 
 export const searchInputSchema = z.object({

@@ -20,5 +20,10 @@ public enum Platform {
     HIRED,
     OTTA,
     REMOTE_OK,
-    JOBICY
+    JOBICY,
+    NERDIN,
+    PICPAY,
+    IFOOD,
+    MERCADO_LIVRE,
+    REMOTIVE
 }
