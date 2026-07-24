@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 set -e
 
+case "$(uname -s)" in
+  CYGWIN*|MINGW*|MSYS*|MINGW32*|MINGW64*)
+    CLS_CMD="cls"
+    ;;
+  *)
+    CLS_CMD="clear"
+    ;;
+esac
+
+$CLS_CMD 2>/dev/null || true
+
 PROJECT_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
 JAR_FILE="${1:-$PROJECT_DIR/target/JobsTelescope-0.0.1-SNAPSHOT.jar}"
 
