@@ -1,8 +1,12 @@
-import { Text, useInput } from 'ink';
+import { Box, Text, useInput } from 'ink';
 import { useState } from 'react';
+import { Logo } from './Logo.tsx';
+import { PromptInput } from './PromptInput.tsx';
 import { LOGO } from '../lib/logo.ts';
 
 const ACCENT = '#7C3AED';
+
+const LOGO_WIDTH = Math.max(...LOGO.split('\n').map((l) => l.length));
 
 interface SearchScreenProps {
   onSubmit: (query: string, region: 'BRAZIL' | 'INTERNATIONAL') => void;
@@ -11,51 +15,70 @@ interface SearchScreenProps {
 export function SearchScreen({ onSubmit }: SearchScreenProps) {
   const [query, setQuery] = useState('');
   const [step, setStep] = useState<'query' | 'region'>('query');
+  const [selectedRegion, setSelectedRegion] = useState<'BRAZIL' | 'INTERNATIONAL'>('BRAZIL');
 
-  useInput((input, key) => {
-    if (step === 'query') {
-      if (key.return) {
-        setStep('region');
-      } else if (key.backspace || key.delete) {
-        setQuery((q) => q.slice(0, -1));
-      } else {
-        setQuery((q) => q + input);
-      }
-    } else if (step === 'region') {
-      if (input === '1') {
-        onSubmit(query, 'BRAZIL');
-      } else if (input === '2') {
-        onSubmit(query, 'INTERNATIONAL');
+  useInput((_input, key) => {
+    if (step === 'region') {
+      if (key.tab) {
+        setSelectedRegion((r) => (r === 'BRAZIL' ? 'INTERNATIONAL' : 'BRAZIL'));
+      } else if (key.return) {
+        onSubmit(query, selectedRegion);
       }
     }
   });
 
-  if (step === 'query') {
-    return (
+  const centered = (children: React.ReactNode) => (
+    <Box
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      height="100%"
+    >
+      {children}
+    </Box>
+  );
+
+  if (step === 'region') {
+    const regions: { label: string; value: 'BRAZIL' | 'INTERNATIONAL' }[] = [
+      { label: 'Brasil', value: 'BRAZIL' },
+      { label: 'Internacional', value: 'INTERNATIONAL' },
+    ];
+
+    return centered(
       <>
-        {LOGO.split('\n').map((line, i) => (
-          <Text key={i} color={ACCENT}>{line}</Text>
-        ))}
+        <Logo />
         <Text> </Text>
-        <Text>Search query</Text>
-        <Text>{query}_</Text>
+        <Box width={20} flexDirection="column" alignItems="center">
+          <Text color={ACCENT}>Região</Text>
+          <Box flexDirection="column" alignSelf="flex-start">
+            {regions.map((r) => (
+              <Text key={r.value} color={selectedRegion === r.value ? ACCENT : undefined}>
+                {selectedRegion === r.value ? ' ●' : ' ○'}  {r.label}
+              </Text>
+            ))}
+          </Box>
+        </Box>
         <Text> </Text>
-        <Text dimColor>Enter to confirm</Text>
+        <Text dimColor>Tab para navegar • Enter para confirmar</Text>
       </>
     );
   }
 
-    return (
-      <>
-        {LOGO.split('\n').map((line, i) => (
-          <Text key={i} color={ACCENT}>{line}</Text>
-        ))}
-        <Text> </Text>
-        <Text>Query: {query}</Text>
+  return centered(
+    <>
+      <Logo />
       <Text> </Text>
-      <Text>Region</Text>
-      <Text>  1  Brazil</Text>
-      <Text>  2  International</Text>
+      <Box borderStyle="round" borderColor={ACCENT} width={LOGO_WIDTH}>
+        <PromptInput
+          placeholder="Digite a vaga desejada"
+          onSubmit={(q) => {
+            setQuery(q);
+            setStep('region');
+          }}
+        />
+      </Box>
+      <Text> </Text>
+      <Text dimColor>Enter para confirmar</Text>
     </>
   );
 }
