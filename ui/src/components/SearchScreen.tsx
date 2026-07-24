@@ -1,5 +1,6 @@
 import { Text, useInput } from 'ink';
 import { useState } from 'react';
+import { LOGO } from '../lib/logo.ts';
 
 const ACCENT = '#7C3AED';
 
@@ -32,7 +33,9 @@ export function SearchScreen({ onSubmit }: SearchScreenProps) {
   if (step === 'query') {
     return (
       <>
-        <Text color={ACCENT}>Jobs Telescope</Text>
+        {LOGO.split('\n').map((line, i) => (
+          <Text key={i} color={ACCENT}>{line}</Text>
+        ))}
         <Text> </Text>
         <Text>Search query</Text>
         <Text>{query}_</Text>
@@ -42,11 +45,13 @@ export function SearchScreen({ onSubmit }: SearchScreenProps) {
     );
   }
 
-  return (
-    <>
-      <Text color={ACCENT}>Jobs Telescope</Text>
-      <Text> </Text>
-      <Text>Query: {query}</Text>
+    return (
+      <>
+        {LOGO.split('\n').map((line, i) => (
+          <Text key={i} color={ACCENT}>{line}</Text>
+        ))}
+        <Text> </Text>
+        <Text>Query: {query}</Text>
       <Text> </Text>
       <Text>Region</Text>
       <Text>  1  Brazil</Text>

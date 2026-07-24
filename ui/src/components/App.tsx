@@ -1,6 +1,7 @@
 import { Text, useInput } from 'ink';
 import { useCallback, useEffect, useState } from 'react';
 import { useCoreClient } from '../hooks/useCoreClient.ts';
+import { LOGO } from '../lib/logo.ts';
 import { ProgressBar } from './ProgressBar.tsx';
 import { ResultsScreen } from './ResultsScreen.tsx';
 import { SearchScreen } from './SearchScreen.tsx';
@@ -45,7 +46,9 @@ export function App({ jarPath = 'core/target/JobsTelescope-0.0.1-SNAPSHOT.jar' }
   if (screen === 'search' && status === 'connecting') {
     return (
       <>
-        <Text color={ACCENT}>Jobs Telescope</Text>
+        {LOGO.split('\n').map((line, i) => (
+          <Text key={i} color={ACCENT}>{line}</Text>
+        ))}
         <Text> </Text>
         <Text dimColor>Connecting...</Text>
       </>
@@ -55,7 +58,9 @@ export function App({ jarPath = 'core/target/JobsTelescope-0.0.1-SNAPSHOT.jar' }
   if (screen === 'running') {
     return (
       <>
-        <Text color={ACCENT}>Jobs Telescope</Text>
+        {LOGO.split('\n').map((line, i) => (
+          <Text key={i} color={ACCENT}>{line}</Text>
+        ))}
         <Text> </Text>
         <Text dimColor>Searching</Text>
         <Text> </Text>
@@ -77,7 +82,9 @@ export function App({ jarPath = 'core/target/JobsTelescope-0.0.1-SNAPSHOT.jar' }
   if (screen === 'error') {
     return (
       <>
-        <Text color={ACCENT}>Jobs Telescope</Text>
+        {LOGO.split('\n').map((line, i) => (
+          <Text key={i} color={ACCENT}>{line}</Text>
+        ))}
         <Text> </Text>
         <Text color="#EF4444">Error</Text>
         <Text> </Text>

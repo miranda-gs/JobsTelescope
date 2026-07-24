@@ -1,4 +1,5 @@
 import { Text } from 'ink';
+import { LOGO } from '../lib/logo.ts';
 
 const ACCENT = '#7C3AED';
 
@@ -9,11 +10,13 @@ interface ResultsScreenProps {
 }
 
 export function ResultsScreen({ jobsFound, outputPath }: ResultsScreenProps) {
-  return (
-    <>
-      <Text color={ACCENT}>Jobs Telescope</Text>
-      <Text> </Text>
-      <Text>Completed</Text>
+    return (
+      <>
+        {LOGO.split('\n').map((line, i) => (
+          <Text key={i} color={ACCENT}>{line}</Text>
+        ))}
+        <Text> </Text>
+        <Text>Completed</Text>
       <Text> </Text>
       <Text>Jobs found  {jobsFound}</Text>
       {outputPath && <Text>Output      {outputPath}</Text>}
