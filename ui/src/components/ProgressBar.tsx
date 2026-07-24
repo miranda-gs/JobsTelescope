@@ -1,6 +1,5 @@
 import { Text } from 'ink';
-
-const ACCENT = '#7C3AED';
+import { ACCENT } from '../lib/constants.ts';
 
 interface ProgressBarProps {
   platform: string;

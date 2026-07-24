@@ -1,12 +1,13 @@
-import { Box, Text, useInput } from 'ink';
+import { Text, useInput } from 'ink';
 import { useCallback, useEffect, useState } from 'react';
 import { useCoreClient } from '../hooks/useCoreClient.ts';
+import { AnimatedSearching } from './AnimatedSearching.tsx';
+import { Center } from './Center.tsx';
 import { Logo } from './Logo.tsx';
 import { ProgressBar } from './ProgressBar.tsx';
 import { ResultsScreen } from './ResultsScreen.tsx';
 import { SearchScreen } from './SearchScreen.tsx';
-
-const ACCENT = '#7C3AED';
+import { ERROR } from '../lib/constants.ts';
 
 interface AppProps {
   jarPath?: string;
@@ -43,60 +44,48 @@ export function App({ jarPath = 'target/JobsTelescope-0.0.1-SNAPSHOT.jar' }: App
     }
   });
 
-  const centered = (children: React.ReactNode) => (
-    <Box
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      height="100%"
-    >
-      {children}
-    </Box>
-  );
-
   if (screen === 'search' && status === 'connecting') {
-    return centered(
-      <>
+    return (
+      <Center>
         <Logo />
-        <Text> </Text>
         <Text dimColor>Connecting...</Text>
-      </>
+      </Center>
     );
   }
 
   if (screen === 'running') {
-    return centered(
-      <>
+    return (
+      <Center>
         <Logo />
-        <Text> </Text>
-        <Text dimColor>Searching</Text>
+        <AnimatedSearching />
         <Text> </Text>
         {progress && <ProgressBar platform={progress.platform} percentage={progress.percentage} />}
-      </>
+      </Center>
     );
   }
 
   if (screen === 'completed') {
-    return centered(
-      <ResultsScreen
-        jobsFound={jobsFound}
-        outputPath={outputPath}
-        onNewSearch={() => setScreen('search')}
-      />
+    return (
+      <Center>
+        <ResultsScreen
+          jobsFound={jobsFound}
+          outputPath={outputPath}
+          onNewSearch={() => setScreen('search')}
+        />
+      </Center>
     );
   }
 
   if (screen === 'error') {
-    return centered(
-      <>
+    return (
+      <Center>
         <Logo />
-        <Text> </Text>
-        <Text color="#EF4444">Error</Text>
+        <Text color={ERROR}>Error</Text>
         <Text> </Text>
         <Text>{error || 'An unknown error occurred'}</Text>
         <Text> </Text>
         <Text dimColor>Press Enter to go back</Text>
-      </>
+      </Center>
     );
   }
 

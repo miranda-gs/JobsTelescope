@@ -1,8 +1,6 @@
 import { Box, Text, useInput } from 'ink';
 import { useState } from 'react';
-
-const ACCENT = '#7C3AED';
-const DIM = '#6B7280';
+import { ACCENT, DIM } from '../lib/constants.ts';
 
 interface PromptInputProps {
   value?: string;

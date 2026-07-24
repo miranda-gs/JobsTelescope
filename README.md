@@ -65,7 +65,6 @@ jtelescope /caminho/para/seu.jar
 |Diretório de saída| |
 |---|---|
 | `./JobsTelescope/output/` |
-Obs.: O mesmo lugar onde foi baixado o codigo fonte do programa
 ## Desenvolvimento
 
 ```bash

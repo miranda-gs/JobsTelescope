@@ -1,7 +1,6 @@
 import { Box, Text } from 'ink';
 import { LOGO } from '../lib/logo.ts';
-
-const ACCENT = '#7C3AED';
+import { ACCENT } from '../lib/constants.ts';
 
 export function Logo() {
   return (
@@ -9,6 +8,7 @@ export function Logo() {
       {LOGO.split('\n').map((line, i) => (
         <Text key={i} color={ACCENT}>{line}</Text>
       ))}
+      <Text> </Text>
     </Box>
   );
 }
