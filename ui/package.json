@@ -4,8 +4,9 @@
   "description": "Jobs Telescope UI - TUI for searching jobs",
   "type": "module",
   "bin": {
-    "jobs-telescope": "./src/index.tsx"
+    "jobs-telescope": "./bin/jobs-telescope.mjs"
   },
+  "main": "./bin/jobs-telescope.mjs",
   "scripts": {
     "dev": "tsx src/index.tsx",
     "start": "tsx src/index.tsx",

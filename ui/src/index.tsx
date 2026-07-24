@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 import { render } from 'ink';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { App } from './components/App.tsx';
 
 if (!process.stdin.isTTY) {
@@ -8,6 +10,8 @@ if (!process.stdin.isTTY) {
   process.exit(1);
 }
 
-const jarPath = process.argv[2] || 'core/target/JobsTelescope-0.0.1-SNAPSHOT.jar';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const defaultJar = resolve(__dirname, '..', '..', 'core', 'target', 'JobsTelescope-0.0.1-SNAPSHOT.jar');
+const jarPath = process.argv[2] ? resolve(process.cwd(), process.argv[2]) : defaultJar;
 
 render(<App jarPath={jarPath} />);
