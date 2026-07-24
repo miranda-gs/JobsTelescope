@@ -1,5 +1,7 @@
 import { Text } from 'ink';
 
+const ACCENT = '#7C3AED';
+
 interface ResultsScreenProps {
   jobsFound: number;
   outputPath: string | null;
@@ -9,14 +11,14 @@ interface ResultsScreenProps {
 export function ResultsScreen({ jobsFound, outputPath }: ResultsScreenProps) {
   return (
     <>
-      <Text bold color="green">
-        Search completed!
-      </Text>
+      <Text color={ACCENT}>Jobs Telescope</Text>
       <Text> </Text>
-      <Text color="cyan">Jobs found: {jobsFound}</Text>
-      {outputPath && <Text color="yellow">Output: {outputPath}</Text>}
+      <Text>Completed</Text>
       <Text> </Text>
-      <Text dimColor>Press Enter for a new search</Text>
+      <Text>Jobs found  {jobsFound}</Text>
+      {outputPath && <Text>Output      {outputPath}</Text>}
+      <Text> </Text>
+      <Text dimColor>Enter for new search</Text>
     </>
   );
 }

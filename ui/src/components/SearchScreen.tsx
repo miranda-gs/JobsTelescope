@@ -1,6 +1,8 @@
 import { Text, useInput } from 'ink';
 import { useState } from 'react';
 
+const ACCENT = '#7C3AED';
+
 interface SearchScreenProps {
   onSubmit: (query: string, region: 'BRAZIL' | 'INTERNATIONAL') => void;
 }
@@ -30,28 +32,25 @@ export function SearchScreen({ onSubmit }: SearchScreenProps) {
   if (step === 'query') {
     return (
       <>
-        <Text bold color="yellow">
-          Jobs Telescope
-        </Text>
+        <Text color={ACCENT}>Jobs Telescope</Text>
         <Text> </Text>
-        <Text color="cyan">Enter search query: {query}_</Text>
+        <Text>Search query</Text>
+        <Text>{query}_</Text>
         <Text> </Text>
-        <Text dimColor>Press Enter to continue</Text>
+        <Text dimColor>Enter to confirm</Text>
       </>
     );
   }
 
   return (
     <>
-      <Text bold color="yellow">
-        Jobs Telescope
-      </Text>
+      <Text color={ACCENT}>Jobs Telescope</Text>
       <Text> </Text>
-      <Text color="cyan">Query: {query}</Text>
+      <Text>Query: {query}</Text>
       <Text> </Text>
-      <Text>Select region:</Text>
-      <Text> [1] Brazil</Text>
-      <Text> [2] International</Text>
+      <Text>Region</Text>
+      <Text>  1  Brazil</Text>
+      <Text>  2  International</Text>
     </>
   );
 }

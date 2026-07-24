@@ -5,6 +5,8 @@ import { ProgressBar } from './ProgressBar.tsx';
 import { ResultsScreen } from './ResultsScreen.tsx';
 import { SearchScreen } from './SearchScreen.tsx';
 
+const ACCENT = '#7C3AED';
+
 interface AppProps {
   jarPath?: string;
 }
@@ -43,11 +45,9 @@ export function App({ jarPath = 'core/target/JobsTelescope-0.0.1-SNAPSHOT.jar' }
   if (screen === 'search' && status === 'connecting') {
     return (
       <>
-        <Text bold color="yellow">
-          Jobs Telescope
-        </Text>
+        <Text color={ACCENT}>Jobs Telescope</Text>
         <Text> </Text>
-        <Text dimColor>Connecting to Core...</Text>
+        <Text dimColor>Connecting...</Text>
       </>
     );
   }
@@ -55,11 +55,9 @@ export function App({ jarPath = 'core/target/JobsTelescope-0.0.1-SNAPSHOT.jar' }
   if (screen === 'running') {
     return (
       <>
-        <Text bold color="yellow">
-          Jobs Telescope
-        </Text>
+        <Text color={ACCENT}>Jobs Telescope</Text>
         <Text> </Text>
-        <Text>Searching...</Text>
+        <Text dimColor>Searching</Text>
         <Text> </Text>
         {progress && <ProgressBar platform={progress.platform} percentage={progress.percentage} />}
       </>
@@ -79,9 +77,9 @@ export function App({ jarPath = 'core/target/JobsTelescope-0.0.1-SNAPSHOT.jar' }
   if (screen === 'error') {
     return (
       <>
-        <Text bold color="red">
-          Error
-        </Text>
+        <Text color={ACCENT}>Jobs Telescope</Text>
+        <Text> </Text>
+        <Text color="#EF4444">Error</Text>
         <Text> </Text>
         <Text>{error || 'An unknown error occurred'}</Text>
         <Text> </Text>
