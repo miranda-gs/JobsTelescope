@@ -158,7 +158,7 @@ function Install-Git {
 }
 
 function Download-Jar {
-  $jarDir = "$InstallDir\core\target"
+  $jarDir = "$InstallDir\target"
   $jarPath = "$jarDir\$JarFile"
 
   New-Item -ItemType Directory -Path $jarDir -Force | Out-Null
@@ -208,14 +208,33 @@ function Install-UIDeps {
   Write-Log "UI dependencies installed"
 }
 
+function Setup-GlobalCommand {
+  Write-Log "Registering jtelescope as a global command..."
+
+  Set-Location "$InstallDir\ui"
+
+  $result = npm link 2>&1
+  if ($LASTEXITCODE -eq 0) {
+    Write-Log "jtelescope command registered globally"
+    return
+  }
+
+  Write-Warn "npm link failed. Try running PowerShell as Administrator and re-run this script."
+  Write-Warn ""
+  Write-Info "Alternatively, register manually:"
+  Write-Info "  cd $InstallDir\ui && npm link"
+  Write-Warn ""
+  Write-Warn "Or add this directory to your PATH:"
+  Write-Warn "  $InstallDir\ui\bin"
+}
+
 function Show-Completion {
   Write-Log "Installation complete!"
   Write-Host ""
-  Write-Info "To run Jobs Telescope:"
-  Write-Info "  cd $InstallDir\ui && npm start"
+  Write-Info "Run jtelescope from anywhere in your terminal."
   Write-Host ""
-  Write-Info "Or with a custom JAR path:"
-  Write-Info "  cd $InstallDir\ui && npm start -- C:\path\to\jar"
+  Write-Info "With a custom JAR path:"
+  Write-Info "  jtelescope C:\path\to\jar"
   Write-Host ""
   Write-Info "Required: Java 25+ JRE (any distribution)"
   Write-Info "Optional for building from source: JDK 25+ with javac"
@@ -234,6 +253,7 @@ function Main {
   Setup-Repo
   Download-Jar
   Install-UIDeps
+  Setup-GlobalCommand
 
   Show-Completion
 }

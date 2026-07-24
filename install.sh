@@ -281,7 +281,7 @@ install_git() {
 
 download_jar() {
   CURRENT_STEP="download_jar"
-  local jar_dir="$INSTALL_DIR/core/target"
+  local jar_dir="$INSTALL_DIR/target"
   local jar_path="$jar_dir/$JAR_FILE"
 
   mkdir -p "$jar_dir"
@@ -339,15 +339,33 @@ install_ui_deps() {
   log "UI dependencies installed"
 }
 
+setup_global_command() {
+  CURRENT_STEP="setup_global_command"
+  log "Registering jtelescope as a global command..."
+
+  cd "$INSTALL_DIR/ui"
+
+  if npm link &>/dev/null; then
+    log "jtelescope command registered globally"
+    return
+  fi
+
+  warn "npm link failed (may need permissions)."
+  info "Try running manually:"
+  info "  cd ${INSTALL_DIR}/ui && sudo npm link"
+  info ""
+  info "Alternatively, add this to your ~/.bashrc or ~/.zshrc:"
+  info "  export PATH=\"${INSTALL_DIR}/ui/bin:\$PATH\""
+}
+
 show_completion() {
   cat <<EOF
 
 $(log "Installation complete!")
-$(info "To run Jobs Telescope:")
-$(info "  cd ${INSTALL_DIR}/ui && npm start")
+$(info "Run ${GREEN}jtelescope${NC} from anywhere in your terminal.")
 $(info "")
-$(info "Or with a custom JAR path:")
-$(info "  cd ${INSTALL_DIR}/ui && npm start -- /path/to/jar")
+$(info "With a custom JAR path:")
+$(info "  jtelescope /path/to/jar")
 $(info "")
 $(info "Required: Java 25+ JRE (any distribution)")
 $(info "Optional for building from source: JDK 25+ with javac")
@@ -373,6 +391,7 @@ main() {
   setup_repo
   download_jar
   install_ui_deps
+  setup_global_command
 
   show_completion
 }
