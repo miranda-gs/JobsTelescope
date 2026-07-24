@@ -1,16 +1,15 @@
 #!/usr/bin/env node
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const require = createRequire(import.meta.url);
-const entry = resolve(__dirname, '..', 'src', 'index.tsx');
+const projectRoot = resolve(__dirname, '..', '..');
+const bashWrapper = resolve(projectRoot, 'jtelescope');
 
 const child = spawn(
-  process.execPath,
-  ['--import', require.resolve('tsx/esm'), entry, ...process.argv.slice(2)],
+  '/usr/bin/env',
+  ['bash', bashWrapper, ...process.argv.slice(2)],
   { stdio: 'inherit', windowsHide: true }
 );
 

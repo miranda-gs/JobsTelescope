@@ -7,6 +7,7 @@ import com.miranda_gs.JobsTelescope.domain.entity.SearchResult;
 import com.miranda_gs.JobsTelescope.infrastructure.io.JsonEventWriter;
 import com.miranda_gs.JobsTelescope.infrastructure.logger.InfrastructureLogger;
 
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -35,7 +36,12 @@ public class SearchJobs {
         exportService.export(result);
 
         var date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        var outputPath = "output/" + date;
+        var home = System.getProperty("user.home");
+        var os = System.getProperty("os.name").toLowerCase();
+        var base = os.contains("win")
+                ? Path.of(home, "Desktop", "JobsTelescope")
+                : Path.of(home, "JobsTelescope");
+        var outputPath = base.resolve(date).toString();
 
         eventWriter.writeCompleted(result.getJobs().size(), outputPath);
         log.info("SearchJobs completed: {} jobs", result.getJobs().size());

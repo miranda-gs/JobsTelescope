@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-clear
 set -e
 
 PROJECT_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
@@ -66,4 +65,4 @@ fi
 
 export NODE_ENV=production
 
-exec npx --prefix "$UI_DIR" tsx "$UI_DIR/src/index.tsx" "$JAR_FILE"
+exec "$UI_DIR/node_modules/.bin/tsx" "$UI_DIR/src/index.tsx" "$JAR_FILE"

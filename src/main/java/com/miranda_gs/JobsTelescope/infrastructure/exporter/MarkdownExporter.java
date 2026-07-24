@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 public class MarkdownExporter implements Exporter {
 
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final Path OUTPUT_BASE = Path.of("output");
+    private static final Path OUTPUT_BASE = outputBaseDir();
     private final InfrastructureLogger log = new InfrastructureLogger(MarkdownExporter.class);
 
     @Override
@@ -56,6 +56,15 @@ public class MarkdownExporter implements Exporter {
         }
 
         return sb.toString();
+    }
+
+    private static Path outputBaseDir() {
+        var home = System.getProperty("user.home");
+        var os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("win")) {
+            return Path.of(home, "Desktop", "JobsTelescope");
+        }
+        return Path.of(home, "JobsTelescope");
     }
 
     private String sanitizeFilename(String title, String company, int index) {

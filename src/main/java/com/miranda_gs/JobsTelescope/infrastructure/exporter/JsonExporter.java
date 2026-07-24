@@ -18,11 +18,20 @@ import java.util.List;
 public class JsonExporter implements Exporter {
 
     private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final Path OUTPUT_BASE = Path.of("output");
+    private static final Path OUTPUT_BASE = outputBaseDir();
     private final ObjectMapper mapper = new ObjectMapper()
             .registerModule(new JavaTimeModule())
             .enable(SerializationFeature.INDENT_OUTPUT);
     private final InfrastructureLogger log = new InfrastructureLogger(JsonExporter.class);
+
+    private static Path outputBaseDir() {
+        var home = System.getProperty("user.home");
+        var os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("win")) {
+            return Path.of(home, "Desktop", "JobsTelescope");
+        }
+        return Path.of(home, "JobsTelescope");
+    }
 
     @Override
     public void export(SearchResult result, List<Job> jobs) {
