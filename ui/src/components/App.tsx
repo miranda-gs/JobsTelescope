@@ -14,7 +14,7 @@ interface AppProps {
 
 type Screen = 'search' | 'running' | 'completed' | 'error';
 
-export function App({ jarPath = 'core/target/JobsTelescope-0.0.1-SNAPSHOT.jar' }: AppProps) {
+export function App({ jarPath = 'target/JobsTelescope-0.0.1-SNAPSHOT.jar' }: AppProps) {
   const [screen, setScreen] = useState<Screen>('search');
   const { status, progress, jobsFound, outputPath, error, connect, search } =
     useCoreClient(jarPath);

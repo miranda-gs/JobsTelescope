@@ -11,7 +11,7 @@ if (!process.stdin.isTTY) {
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const defaultJar = resolve(__dirname, '..', '..', 'core', 'target', 'JobsTelescope-0.0.1-SNAPSHOT.jar');
+const defaultJar = resolve(__dirname, '..', '..', 'target', 'JobsTelescope-0.0.1-SNAPSHOT.jar');
 const jarPath = process.argv[2] ? resolve(process.cwd(), process.argv[2]) : defaultJar;
 
 render(<App jarPath={jarPath} />);
