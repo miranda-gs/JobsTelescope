@@ -9,6 +9,7 @@ import com.miranda_gs.JobsTelescope.infrastructure.scraper.brazil.ifood.IfoodScr
 import com.miranda_gs.JobsTelescope.infrastructure.scraper.brazil.indeed.IndeedScraper;
 import com.miranda_gs.JobsTelescope.infrastructure.scraper.brazil.infojobs.InfojobsScraper;
 import com.miranda_gs.JobsTelescope.infrastructure.scraper.brazil.mercadolivre.MercadoLivreScraper;
+import com.miranda_gs.JobsTelescope.infrastructure.scraper.brazil.netempregos.NetEmpregosScraper;
 import com.miranda_gs.JobsTelescope.infrastructure.scraper.brazil.nerdin.NerdinScraper;
 import com.miranda_gs.JobsTelescope.infrastructure.scraper.brazil.ninety_nine_jobs.NinetyNineJobsScraper;
 import com.miranda_gs.JobsTelescope.infrastructure.scraper.brazil.picpay.PicpayScraper;
@@ -39,6 +40,7 @@ public class BrazilScraperFactory {
         scrapers.put(Platform.PICPAY, new PicpayScraper());
         scrapers.put(Platform.IFOOD, new IfoodScraper());
         scrapers.put(Platform.MERCADO_LIVRE, new MercadoLivreScraper());
+        scrapers.put(Platform.NETEMPREGOS, new NetEmpregosScraper());
     }
 
     public Optional<JobScraper> getScraper(Platform platform) {

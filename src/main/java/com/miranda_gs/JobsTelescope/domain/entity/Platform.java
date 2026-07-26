@@ -25,5 +25,6 @@ public enum Platform {
     PICPAY,
     IFOOD,
     MERCADO_LIVRE,
-    REMOTIVE
+    REMOTIVE,
+    NETEMPREGOS
 }
